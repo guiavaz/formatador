@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formatação de Links</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #184c7e;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+        }
+        .formatted-text {
+            margin-top: 20px;
+            white-space: pre-wrap;
+        }
+        .raw-html {
+            background-color: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+            white-space: pre-wrap;
+        }
+        #headerWrapper{
+            padding:0;
+            margin:0;
+            /*height: 440px; */
+            height: auto
+            width:100%;
+            position:relative;
+            z-index:1;
+            background-color: #033769;
+        }
+        h1 {
+            padding: 0;
+            color: white;
+            text-align: center;
+        }
+        p {
+            text-align: left;
+            color: white;
+            margin-left: 0.50%;
+            margin-bottom: 0.50%;
+        }
+        footer {
+            color: white;
+            margin-top: 1%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="headerWrapper" align="right">
+        <br>
+        <h1>Formatador de Links Para GLPI</h1>
+        <p>Instruções de uso:</p>
+        <p>1. Copie seu chat e cole em um acompanhamento do GLPI;</p>
+        <p>2. Clique no campo "Código Fonte";</p>
+        <p>3. Copie o código fonte;</p>
+        <p>4. Cole o código fonte no formatador;</p>
+        <p>5. Clique no botão "Formatar Texto";</p>
+        <p>6. Navegue até o fim da pagina e copie o código formatado;</p>
+        <p>7. Substitua o código fonte do acompanhamento do GLPI pelo copiado anteriormente</p>
+        <p>8. Salve o acompanhamento formatado!</p>
+        <p>Observação: se colar o chat diretamente no bloco também funcionará, mas a formatação difere do padrão do chat.</p>
+        <br>
+    </div>
+
+    <p>Insira o texto HTML abaixo:</p>
+    <textarea id="inputText"> Cole aqui o código fonte do texto copiado do GLPI</textarea><br>
+    <button onclick="formatText()">Formatar Texto</button>
+    
+    <div class="formatted-text" id="outputText"></div>
+    <!--< class="raw-html" id="outputHtml"></div>-->
+    <textarea class="formatted-text" id="outputHtml"></textarea>
+
+    <script>
+        let formattedText = ''; // Variável global
+    
+        function formatText() {
+            const inputText = document.getElementById('inputText').value;
+            const urlPattern = /(\bhttps?:\/\/[^\s<]+)/g;
+
+            formattedText = inputText.replace(urlPattern, '<a href="$1">$1</a>');
+
+            formattedText = formattedText.replace(/\n+/g, '</p><p>');
+
+            formattedText = `<p>${formattedText}</p>`;
+
+            document.getElementById('outputText').innerHTML = formattedText;
+            document.getElementById('outputHtml').textContent = formattedText;
+        }
+    </script>
+    
+    <script>
+        function copiar() {
+            navigator.clipboard.writeText(formattedText)
+        }
+    </script>
+    
+    <div id="outputText"></div>
+    <pre id="outputHtml"></pre>
+    
+    <button onclick="copiar()">Copiar Texto</button>
+    
+    <script>
+        let ovo = 0; 
+
+        function easteregg() {
+
+            if (ovo>1)
+            {
+                document.body.style.backgroundImage = "url('https://www.estado.rs.gov.br/upload/recortes/201707/20075647_1210628_GDO.jpg')";
+                document.body.style.backgroundSize = "cover"; // Faz a imagem cobrir todo o fundo
+            }
+                else
+            {
+                ovo++;
+            }
+        }
+    </script>
+    
+    <footer onclick="easteregg()">Powered by Gaúcho ®</footer>
+    
+</html>
